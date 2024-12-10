@@ -3,12 +3,12 @@ import 'package:echo_note_app/presentation/view_content/view_content.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-   HomeScreen({super.key});
+  HomeScreen({super.key});
   final ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    scrollController.addListener((){
+    scrollController.addListener(() {
       print(scrollController.offset);
     });
     return Scaffold(
@@ -34,7 +34,9 @@ class HomeScreen extends StatelessWidget {
                     Text(
                       "Your Notes",
                       style: TextStyle(
-                          fontSize: 45, letterSpacing: -4, color: Colors.black54),
+                          fontSize: 45,
+                          letterSpacing: -4,
+                          color: Colors.black54),
                     ),
                     Spacer(),
                     Container(
@@ -47,11 +49,11 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Divider(),
-                SizedBox(
+                const Divider(),
+                const SizedBox(
                   height: 20,
                 ),
                 GridView(
@@ -66,7 +68,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   children: List.generate(10, (index) {
                     return Padding(
-                      padding: index%2==0? const EdgeInsets.only(left: 10,top: 6) : const EdgeInsets.only(right: 10,top: 6),
+                      padding: index % 2 == 0
+                          ? const EdgeInsets.only(left: 10, top: 6)
+                          : const EdgeInsets.only(right: 10, top: 6),
                       child: Container(
                         child: ItemCard(
                           index: index,
@@ -84,24 +88,31 @@ class HomeScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       //floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add),),
       floatingActionButton: GestureDetector(
-        onTap: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ScreenAddEditNote(type: ActionType.addNote)));
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  ScreenAddEditNote(type: ActionType.addNote)));
         },
         child: Container(
-          
           width: 110,
           height: 60,
           decoration: BoxDecoration(
-            color: Colors.greenAccent,
-            borderRadius: BorderRadius.circular(10)
-          ),
+              color: Colors.greenAccent,
+              borderRadius: BorderRadius.circular(10)),
           child: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Icon(Icons.add,color:  Colors.black54,),
-                Text("Add new",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black54),)
+                Icon(
+                  Icons.add,
+                  color: Colors.black54,
+                ),
+                Text(
+                  "Add new",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black54),
+                )
               ],
             ),
           ),

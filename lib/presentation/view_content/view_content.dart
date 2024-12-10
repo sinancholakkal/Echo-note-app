@@ -75,9 +75,7 @@ class ScreenAddEditNote extends StatelessWidget {
                   Expanded(
                       child: SizedBox(
                     child: InkWell(
-                      onTap: () {
-                        
-                      },
+                      onTap: () {},
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(

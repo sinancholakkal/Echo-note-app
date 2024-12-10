@@ -2,7 +2,6 @@ import 'package:echo_note_app/presentation/home_screen/widget/longpress_popup_it
 import 'package:echo_note_app/presentation/view_content/view_content.dart';
 import 'package:flutter/material.dart';
 
-
 class ItemCard extends StatelessWidget {
   final int index;
   ItemCard({super.key, required this.index});
@@ -75,5 +74,4 @@ class ItemCard extends StatelessWidget {
       ),
     );
   }
-
 }
