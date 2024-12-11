@@ -1,3 +1,4 @@
+import 'package:echo_note_app/domain/delete_note/bloc/delete_bloc.dart';
 import 'package:echo_note_app/domain/get_notes/bloc/get_notes_bloc.dart';
 import 'package:echo_note_app/domain/post_note/bloc/post_note_bloc.dart';
 import 'package:echo_note_app/presentation/home_screen/home_screen.dart';
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => PostNoteBloc(),
+        ),
+        BlocProvider(
+          create: (context) => DeleteBloc(),
         ),
       ],
       child: MaterialApp(

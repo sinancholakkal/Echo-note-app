@@ -8,6 +8,7 @@ part 'post_note_state.dart';
 class PostNoteBloc extends Bloc<PostNoteEvent, PostNoteState> {
   PostNoteBloc() : super(PostNoteInitial()) {
     on<PostNoteEventToApi>((event, emit) {
+      emit(PostNoteInitial());
       postNoteRepo(event.title, event.descr);
     });
   }

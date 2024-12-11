@@ -1,5 +1,6 @@
 import 'package:echo_note_app/domain/get_notes/bloc/get_notes_bloc.dart';
 import 'package:echo_note_app/domain/post_note/bloc/post_note_bloc.dart';
+import 'package:echo_note_app/presentation/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -107,7 +108,7 @@ class ScreenAddEditNote extends StatelessWidget {
                           BlocProvider.of<GetNotesBloc>(context)
                               .add(SendGetRequistEvent());
                         });
-                        Navigator.pop(context);
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>HomeScreen()), (route) => false);
                       },
                       child: Container(
                         height: 60,

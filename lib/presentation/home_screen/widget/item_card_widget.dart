@@ -23,7 +23,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        longPressMenuItem(context);
+        longPressMenuItem(context,note.id.toString());
       },
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
