@@ -1,4 +1,7 @@
+import 'package:echo_note_app/domain/get_notes/bloc/get_notes_bloc.dart';
+import 'package:echo_note_app/domain/post_note/bloc/post_note_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum ActionType { addNote, editNote }
 
@@ -8,6 +11,25 @@ class ScreenAddEditNote extends StatelessWidget {
   String? content;
   ScreenAddEditNote({super.key, required this.type, this.title, this.content});
 
+  late TextEditingController titleController =
+      TextEditingController(text: type == ActionType.editNote ? title : "");
+  late TextEditingController descrController =
+      TextEditingController(text: type == ActionType.editNote ? content : "");
+
+  Future<void> saveButton(BuildContext context) async {
+    if (ActionType.addNote == type) {
+      postNote(context);
+    } else {
+      putNote(context);
+    }
+  }
+
+  void postNote(BuildContext context) async {
+    BlocProvider.of<PostNoteBloc>(context).add(PostNoteEventToApi(
+        title: titleController.text, descr: descrController.text));
+  }
+
+  void putNote(BuildContext context) {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +54,7 @@ class ScreenAddEditNote extends StatelessWidget {
                       SizedBox(
                         height: 70,
                         child: TextFormField(
+                          controller: titleController,
                           decoration: InputDecoration(
                               hintText: type.name == "addNote" ? "Title" : "",
                               hintStyle: TextStyle(fontSize: 30),
@@ -41,6 +64,7 @@ class ScreenAddEditNote extends StatelessWidget {
                         ),
                       ),
                       TextFormField(
+                        controller: descrController,
                         maxLines: 20,
                         decoration: InputDecoration(
                             hintText:
@@ -75,7 +99,16 @@ class ScreenAddEditNote extends StatelessWidget {
                   Expanded(
                       child: SizedBox(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () async {
+                        await saveButton(context);
+                        //BlocProvider.of<GetNotesBloc>(context).add(SendGetRequistEvent());
+                        //await Future.delayed(Duration(seconds: 2));
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          BlocProvider.of<GetNotesBloc>(context)
+                              .add(SendGetRequistEvent());
+                        });
+                        Navigator.pop(context);
+                      },
                       child: Container(
                         height: 60,
                         decoration: BoxDecoration(

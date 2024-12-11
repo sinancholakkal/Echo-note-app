@@ -1,6 +1,8 @@
+import 'package:echo_note_app/domain/get_notes/bloc/get_notes_bloc.dart';
 import 'package:echo_note_app/presentation/home_screen/widget/item_card_widget.dart';
 import 'package:echo_note_app/presentation/view_content/view_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -8,6 +10,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<GetNotesBloc>(context).add(SendGetRequistEvent());
     scrollController.addListener(() {
       print(scrollController.offset);
     });
@@ -56,29 +59,48 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                GridView(
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    //crossAxisSpacing: 10,
-                    mainAxisSpacing: 30,
-                    mainAxisExtent: 220,
-                  ),
-                  children: List.generate(10, (index) {
-                    return Padding(
-                      padding: index % 2 == 0
-                          ? const EdgeInsets.only(left: 10, top: 6)
-                          : const EdgeInsets.only(right: 10, top: 6),
-                      child: Container(
-                        child: ItemCard(
-                          index: index,
+                BlocBuilder<GetNotesBloc, GetNotesState>(
+                  builder: (context, state) {
+                    if (state is GetLoadingState) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is GetLoadedState) {
+                      return GridView(
+                        controller: scrollController,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          //crossAxisSpacing: 10,
+                          mainAxisSpacing: 30,
+                          mainAxisExtent: 220,
                         ),
-                      ),
-                    );
-                  }),
-                ),
+                        children: List.generate(state.result.length, (index) {
+                          return Padding(
+                            padding: index % 2 == 0
+                                ? const EdgeInsets.only(left: 10, top: 6)
+                                : const EdgeInsets.only(right: 10, top: 6),
+                            child: Container(
+                              child: ItemCard(
+                                note: state.result[index],
+                                index: index,
+                              ),
+                            ),
+                          );
+                        }),
+                      );
+                    } else if (state is GetErrorState) {
+                      return Center(
+                        child: Text("Somthing wrong"),
+                      );
+                    } else {
+                      return Center(
+                        child: Text("Not is empty"),
+                      );
+                    }
+                  },
+                )
                 //ItemCard(screenSize: screenSize)
               ],
             ),

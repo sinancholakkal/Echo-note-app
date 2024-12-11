@@ -1,10 +1,14 @@
+
+import 'package:echo_note_app/domain/get_notes/get_note_model/get_note_model.dart';
 import 'package:echo_note_app/presentation/home_screen/widget/longpress_popup_item.dart';
 import 'package:echo_note_app/presentation/view_content/view_content.dart';
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
   final int index;
-  ItemCard({super.key, required this.index});
+  final GetNoteModel note;
+  ItemCard({super.key, required this.index,required this.note});
+
   final List<Color> lightColors = [
     Colors.pink.withOpacity(0.5),
     Colors.orange.withOpacity(0.5),
@@ -24,17 +28,12 @@ class ItemCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                ScreenAddEditNote(type: ActionType.editNote)));
+                ScreenAddEditNote(type: ActionType.editNote,title: note.title.toString(),content:note.description.toString() ,)));
       },
       child: Transform.rotate(
         angle: -0.1,
         child: Container(
           padding: EdgeInsets.all(10),
-          //width: (screenSize.width / 2) - 20,
-          //height: (screenSize.width / 2) + 100,
-          //height: 300,
-
-          //color: Colors.grey,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -48,10 +47,10 @@ class ItemCard extends StatelessWidget {
             border: Border.all(),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: const Column(
+          child:  Column(
             children: [
               Text(
-                "Not sure where this goingfahjgkfjhbjhfhfdkhkshjkhsljkhgljsh",
+                note.title.toString(),
                 style: TextStyle(
                   fontSize: 20,
                   height: 0,
@@ -63,7 +62,7 @@ class ItemCard extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "Not sure where this goingfahjgkfjhbjhfhfdkhkshjkhsljkhgljshjkshfkjahfhlksjfajshfyugsahjfasfhjahsljkfhaskvdfsfhgkhfgkjhgfkh",
+                note.description.toString(),
                 style: TextStyle(color: Colors.black45),
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
