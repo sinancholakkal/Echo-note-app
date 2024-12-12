@@ -42,13 +42,20 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.black54),
                     ),
                     Spacer(),
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Icon(Icons.add),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                ScreenAddEditNote(type: ActionType.addNote)));
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Icon(Icons.add),
+                      ),
                     ),
                   ],
                 ),
@@ -62,15 +69,16 @@ class HomeScreen extends StatelessWidget {
                 BlocBuilder<GetNotesBloc, GetNotesState>(
                   builder: (context, state) {
                     if (state is GetLoadingState) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (state is GetLoadedState) {
                       return GridView(
                         controller: scrollController,
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           //crossAxisSpacing: 10,
                           mainAxisSpacing: 30,

@@ -1,3 +1,4 @@
+import 'package:echo_note_app/domain/edit_note/bloc/edit_bloc.dart';
 import 'package:echo_note_app/domain/get_notes/bloc/get_notes_bloc.dart';
 import 'package:echo_note_app/domain/post_note/bloc/post_note_bloc.dart';
 import 'package:echo_note_app/presentation/home_screen/home_screen.dart';
@@ -8,9 +9,10 @@ enum ActionType { addNote, editNote }
 
 class ScreenAddEditNote extends StatelessWidget {
   final ActionType type;
+  String? id;
   String? title;
   String? content;
-  ScreenAddEditNote({super.key, required this.type, this.title, this.content});
+  ScreenAddEditNote({super.key,this.id, required this.type, this.title, this.content});
 
   late TextEditingController titleController =
       TextEditingController(text: type == ActionType.editNote ? title : "");
@@ -21,6 +23,7 @@ class ScreenAddEditNote extends StatelessWidget {
     if (ActionType.addNote == type) {
       postNote(context);
     } else {
+      print("================================================");
       putNote(context);
     }
   }
@@ -30,7 +33,9 @@ class ScreenAddEditNote extends StatelessWidget {
         title: titleController.text, descr: descrController.text));
   }
 
-  void putNote(BuildContext context) {}
+  void putNote(BuildContext context) {
+    BlocProvider.of<EditBloc>(context).add(EditNoteEvent(id: id.toString(), title: titleController.text, des: descrController.text));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -23,12 +23,12 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        longPressMenuItem(context,note.id.toString());
+        longPressMenuItem(context,note);
       },
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) =>
-                ScreenAddEditNote(type: ActionType.editNote,title: note.title.toString(),content:note.description.toString() ,)));
+                ScreenAddEditNote(type: ActionType.editNote,title: note.title.toString(),content:note.description.toString(),id: note.id.toString(),)));
       },
       child: Transform.rotate(
         angle: -0.1,
